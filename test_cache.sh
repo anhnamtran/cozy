@@ -18,6 +18,8 @@ if [ $# -eq 0 ]; then
 fi
 
 function run_exp {
+  redis-cli FLUSHALL
+
   pushd examples > /dev/null
   cozy $1.ds -t $TIME_OUT --no-cost-model-cache | tee "${NO_CACHE}/$1.log"
   popd
@@ -35,8 +37,6 @@ function run_exp {
   done
 
   update_summary $1
-
-  redis-cli FLUSHALL
 }
 
 function update_summary {
