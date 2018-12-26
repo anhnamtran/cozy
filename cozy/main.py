@@ -10,7 +10,7 @@ import argparse
 import datetime
 import pickle
 
-from multiprocessing import Value
+from multiprocessing import Queue
 
 from cozy import parse
 from cozy import codegen
@@ -57,7 +57,7 @@ def run():
     args = parser.parse_args()
     opts.read(args)
 
-    improve_count = Value('i', 0)
+    improve_count = Queue()
 
     if args.resume:
         with common.open_maybe_stdin(args.file or "-", mode="rb") as f:
@@ -198,6 +198,9 @@ def run():
 
     from .cost_model import no_cost_model_cache
     if no_cost_model_cache.value:
-        print("Number of improvements done (no cache): {}".format(improve_count.value))
+        print("Number of improvements done (no cache): {}".format(improve_count.qsize()))
     else:
-        print("Number of improvements done (with cache): {}".format(improve_count.value))
+        print("Number of improvements done (with cache): {}".format(improve_count.qsize()))
+        with open('data.txt', 'w+') as f:
+            while not improve_count.empty():
+                f.write("{}\n".format(improve_count.get()))

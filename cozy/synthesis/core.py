@@ -14,9 +14,10 @@ See their docstrings for more information.
 
 from collections import OrderedDict, namedtuple
 import itertools
+import time
 from typing import Callable
 
-from multiprocessing import Value
+from multiprocessing import Queue
 
 from cozy.syntax import (
     INT, BOOL, TMap,
@@ -107,7 +108,7 @@ def improve(
         examples      : [{str:object}]     = (),
         cost_model    : CostModel          = None,
         ops           : [Op]               = (),
-        improve_count   : Value              = None):
+        improve_count   : Queue            = None):
     """Improve the target expression using enumerative synthesis.
 
     This function is a generator that yields increasingly better and better
@@ -277,8 +278,7 @@ def improve(
                 break
 
         if improve_count is not None:
-            with improve_count.get_lock():
-                improve_count.value += 1
+            improve_count.put(time.time())
 
 SearchInfo = namedtuple("SearchInfo", (
     "context",

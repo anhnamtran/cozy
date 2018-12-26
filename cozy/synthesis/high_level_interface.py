@@ -11,7 +11,6 @@ from typing import Callable, Any
 import sys
 import os
 from queue import Empty
-from multiprocessing import Value
 
 from cozy.common import typechecked, OrderedSet, LINE_BUFFER_MODE
 from cozy.syntax import Query, Op, Exp, EVar, EAll
@@ -45,7 +44,7 @@ class ImproveQueryJob(jobs.Job):
             hints       : [Exp]     = [],
             freebies    : [Exp]     = [],
             ops         : [Op]      = [],
-            improve_count             = None):
+            improve_count           = None):
         super().__init__()
         self.state = state
         self.assumptions = assumptions
@@ -99,7 +98,7 @@ def improve_implementation(
         impl              : Implementation,
         timeout           : datetime.timedelta = datetime.timedelta(seconds=60),
         progress_callback : Callable[[Implementation], Any] = None,
-        improve_count     : Value = None) -> Implementation:
+        improve_count      = None) -> Implementation:
     """Improve an implementation.
 
     This function tries to synthesize a better version of the given

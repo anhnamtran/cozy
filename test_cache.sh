@@ -10,6 +10,8 @@ NO_CACHE="${EXP_OUT}/no_cache"
 
 SUMMARY="${EXP_OUT}/summary.log"
 
+WARM_UP_LIMIT=3
+
 TIME_OUT=$1
 if [ $# -eq 0 ]; then
   TIME_OUT=60
@@ -17,9 +19,22 @@ fi
 
 function run_exp {
   cozy $1.ds -t $TIME_OUT --no-cost-model-cache | tee "${NO_CACHE}/$1.log"
-  cozy $1.ds -t $TIME_OUT | tee "${CACHE}/$1.log"
+
+  COUNTER=0
+  while [ $COUNTER -lt $WARM_UP_LIMIT ]; do
+
+    pushd examples > /dev/null
+    cozy $1.ds -t $TIME_OUT | tee "${CACHE}/$1.log"
+    popd
+
+    ./vis.py $1 $COUNTER
+
+    let COUNER=COUNTER+1
+  done
 
   update_summary $1
+
+  redis-cli FLUSHALL
 }
 
 function update_summary {
@@ -34,8 +49,6 @@ mkdir -p $CACHE
 mkdir -p $NO_CACHE
 
 > $SUMMARY
-
-pushd examples > /dev/null
 
 run_exp maxbag
 run_exp tpchq5
