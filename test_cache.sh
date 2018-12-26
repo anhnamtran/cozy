@@ -18,15 +18,21 @@ if [ $# -eq 0 ]; then
 fi
 
 function run_exp {
+  echo "Flushing Cache"
   redis-cli FLUSHALL
 
+  echo "------------------------------------------"
+  echo "Running baseline on $1"
   pushd examples > /dev/null
   cozy $1.ds -t $TIME_OUT --no-cost-model-cache > "${NO_CACHE}/$1.log"
   popd
 
+  echo "------------------------------------------"
+  echo "Cache warmup limit: $WARM_UP_LIMIT"
   COUNTER=0
   while [ $COUNTER -lt $WARM_UP_LIMIT ]; do
-    echo $COUNTER
+    echo "------------------------------------------"
+    echo "Run no. $COUNTER"
 
     pushd examples > /dev/null
     cozy $1.ds -t $TIME_OUT > "${CACHE}/$1.log"
