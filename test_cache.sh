@@ -22,6 +22,7 @@ function run_exp {
   redis-cli FLUSHALL
 
   echo "------------------------------------------"
+  echo "------------------------------------------"
   echo "Running baseline on $1"
   pushd examples > /dev/null
   cozy $1.ds -t $TIME_OUT --no-cost-model-cache > "${NO_CACHE}/$1.log"
