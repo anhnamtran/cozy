@@ -57,7 +57,7 @@ def run():
     args = parser.parse_args()
     opts.read(args)
 
-    imprv_count = Value('i', 0)
+    improve_count = Value('i', 0)
 
     if args.resume:
         with common.open_maybe_stdin(args.file or "-", mode="rb") as f:
@@ -143,7 +143,7 @@ def run():
             ast,
             timeout           = datetime.timedelta(seconds=args.timeout),
             progress_callback = callback,
-            imprv_count=imprv_count)
+            improve_count=improve_count)
 
         if server is not None:
             server.join()
@@ -198,6 +198,6 @@ def run():
 
     from .cost_model import no_cost_model_cache
     if no_cost_model_cache.value:
-        print("Number of improvements done (no cache): {}".format(imprv_count.value))
+        print("Number of improvements done (no cache): {}".format(improve_count.value))
     else:
-        print("Number of improvements done (with cache): {}".format(imprv_count.value))
+        print("Number of improvements done (with cache): {}".format(improve_count.value))
