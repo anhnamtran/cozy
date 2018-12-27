@@ -3,6 +3,8 @@ export PYTHONUBUFFERED=1
 
 set -e
 
+trap "exit 1" SIGINT
+
 EXP_OUT="${PWD}/exp_out"
 
 CACHE="${EXP_OUT}/cache"
@@ -11,6 +13,9 @@ NO_CACHE="${EXP_OUT}/no_cache"
 SUMMARY="${EXP_OUT}/summary.log"
 
 WARM_UP_LIMIT=3
+if [ $# -eq 2 ]; then
+  WARM_UP_LIMIT=$2
+fi
 
 TIME_OUT=$1
 if [ $# -eq 0 ]; then
@@ -61,9 +66,9 @@ mkdir -p $NO_CACHE
 > $SUMMARY
 
 run_exp maxbag
-#run_exp tpchq5
-#run_exp clausedb
-#run_exp nested-map
-#run_exp disjunction
-#run_exp graph
-#run_exp map
+run_exp tpchq5
+run_exp clausedb
+run_exp nested-map
+run_exp disjunction
+run_exp graph
+run_exp map
