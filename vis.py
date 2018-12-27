@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 import sys
 import os
 
-lines = open("data.txt", "r").read().split('\n')
+lines = open("examples/data.txt", "r").read().split('\n')
 times = list(map(float, lines[:-1]))
 
 for i in range(1, len(times)):

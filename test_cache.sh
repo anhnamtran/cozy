@@ -10,7 +10,7 @@ NO_CACHE="${EXP_OUT}/no_cache"
 
 SUMMARY="${EXP_OUT}/summary.log"
 
-WARM_UP_LIMIT=3
+WARM_UP_LIMIT=1
 
 TIME_OUT=$1
 if [ $# -eq 0 ]; then
@@ -61,9 +61,9 @@ mkdir -p $NO_CACHE
 > $SUMMARY
 
 run_exp maxbag
-#run_exp tpchq5
-#run_exp clausedb
-#run_exp nested-map
-#run_exp disjunction
-#run_exp graph
-#run_exp map
+run_exp tpchq5
+run_exp clausedb
+run_exp nested-map
+run_exp disjunction
+run_exp graph
+run_exp map
