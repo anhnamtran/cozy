@@ -140,7 +140,8 @@ class CostModel(object):
         self.funcs = OrderedDict(funcs)
         self.ops = ops
         self.freebies = freebies
-        self.cache = redis.Redis(host='localhost', port=6379, db=0)
+        if not no_cost_model_cache.value:
+            self.cache = redis.Redis(host='localhost', port=6379, db=0)
 
     def __repr__(self):
         return "CostModel(assumptions={!r}, examples={!r}, funcs={!r}, freebies={!r}, ops={!r})".format(
