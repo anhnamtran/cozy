@@ -3,6 +3,8 @@ export PYTHONUBUFFERED=1
 
 set -e
 
+trap "exit 1" SIGINT
+
 EXP_OUT="${PWD}/exp_out"
 
 CACHE="${EXP_OUT}/cache"
