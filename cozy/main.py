@@ -201,6 +201,6 @@ def run():
         print("Number of improvements done (no cache): {}".format(improve_count.qsize()))
     else:
         print("Number of improvements done (with cache): {}".format(improve_count.qsize()))
-        with open('data.txt', 'w+') as f:
-            while not improve_count.empty():
-                f.write("{}\n".format(improve_count.get()))
+    with open('data.txt', 'w+') as f:
+        while not improve_count.empty():
+            f.write("{}\n".format(improve_count.get()))
