@@ -1,5 +1,5 @@
-TIMEOUT=300
-CACHE_LIMIT=5
+TIMEOUT=480
+CACHE_LIMIT=7
 RM=rm -rf
 EMAIL=atran35@cs.washington.edu
 

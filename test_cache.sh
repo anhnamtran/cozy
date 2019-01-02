@@ -54,7 +54,9 @@ function run_exp {
     update_summary $1 $COUNTER
 
     ./vis.py $1 $COUNTER
-    cp "examples/data.txt" "plots/$1/run-$1.txt"
+    cp "examples/data.txt" "plots/$1/run-$COUNTER.txt"
+
+    ./hit_rates.py $1 $COUNTER
 
     let COUNTER=COUNTER+1
   done
@@ -74,7 +76,7 @@ mkdir -p $NO_CACHE
 run_exp maxbag
 run_exp tpchq5
 #run_exp clausedb
-run_exp nested-map
 run_exp disjunction
+run_exp nested-map
 run_exp graph
 run_exp map
