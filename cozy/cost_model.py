@@ -159,7 +159,7 @@ class CostModel(object):
         if no_cost_model_cache.value:
             return self.__compare(e1, e2, context)
 
-        key = str(e1) + ':' + str(e2) + ':' + str(context.path_conditions()) + str(self.assumptions) + str(self.funcs)
+        key = str(e1) + ':' + str(e2) + ':' + str(context.path_conditions()) + ':' + str(self.assumptions) + ':' + str(self.funcs)
 
         value = self.cache.get(key)
 
