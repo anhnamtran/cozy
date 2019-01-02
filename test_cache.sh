@@ -54,6 +54,7 @@ function run_exp {
     update_summary $1 $COUNTER
 
     ./vis.py $1 $COUNTER
+    cp "examples/data.txt" "plots/$1/run-$1.txt"
 
     let COUNTER=COUNTER+1
   done
