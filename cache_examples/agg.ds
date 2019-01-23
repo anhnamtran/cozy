@@ -1,0 +1,21 @@
+Agg:
+
+    state l : Bag<Int>
+
+    query elems()
+        l
+
+    query totalSum()
+        sum [ i | i <- l ]
+
+    query countGt10()
+        sum [ 1 | x <- l, x > 10 ]
+
+//    query minimum()
+//        min l
+
+//    query maximum()
+//        max l
+
+    op add(i : Int)
+        l.add(i);
