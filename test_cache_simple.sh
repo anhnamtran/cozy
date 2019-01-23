@@ -32,7 +32,7 @@ function run_exp {
 # $2: driver name
 function run_driver {
   rm -rf *.class
-  javac -cp .:* *.java
+  javac -cp .:* $2.java $2Main.java
 
   java $2Main
 }
