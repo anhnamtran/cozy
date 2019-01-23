@@ -46,13 +46,13 @@ class AggMain {
     for (int i = 0; i < N; i++) {
       s.add(to_add.get(i));
 
-      sum_ss.add(s.totalSum());
-      count_ss.add(s.countGt10());
+      sum_ss.add(sum(s));
+      count_ss.add(countGt10(s));
 
       s.add(to_add.get(i));
 
-      sum_ss.add(s.totalSum());
-      count_ss.add(s.countGt10());
+      sum_ss.add(sum(s));
+      count_ss.add(countGt10(s));
     }
 
     System.out.println("Baseline code time in ms: " + (System.nanoTime() - lStartTime) / 1000000);
@@ -61,5 +61,22 @@ class AggMain {
       assert sum_bs.get(i) == sum_ss.get(i);
       assert count_bs.get(i) == count_ss.get(i);
     }
+  }
+  
+  public static Integer sum(ArrayList<Integer> ls) {
+    Integer sum = new Integer();
+    for (int i = 0; i < ls.size(); i++) {
+      sum.add(ls.get(i));
+    }
+    return sum;
+  }
+
+  public static Integer countGt10(ArrayList<Integer> ls) {
+    Integer count = new Integer();
+    for (int i = 0; i < ls.size(); i++) {
+      if (ls.get(i).compareTo(new Integer(10) > 0))
+        count.add(1);
+    }
+    return count;
   }
 }
