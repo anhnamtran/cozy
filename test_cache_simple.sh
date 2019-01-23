@@ -1,5 +1,7 @@
 export PYTHONUNBUFFERED=1
 
+COZY_OPTS=""
+
 set -e
 
 LOG_DIR="/tmp/cozy-logs"
@@ -11,15 +13,16 @@ TIME_DIR="$LOG_DIR/times"
 # $2: out name
 function run_exp {
   redis-cli FLUSHALL
+  echo "Running $2"
   pushd cache_examples > /dev/null
 
   echo "Running Cozy with no cache"
-  { time cozy --no-cost-model-cache $1.ds --java $2.java &> $OUT_DIR/$1-no-cache.log ; } &> $TIME_DIR/$1-no-cache.time
+  { time cozy --no-cost-model-cache $1.ds --java $2.java $COZY_OPTS &> $OUT_DIR/$1-no-cache.log ; } &> $TIME_DIR/$1-no-cache.time
 
   run_driver $1 $2
 
   echo "Running Cozy with cache"
-  { time cozy $1.ds --java $2.java &> $OUT_DIR/$1-cache.log ; } &> $TIME_DIR/$1-cache.time
+  { time cozy $1.ds --java $2.java $COZY_OPTS &> $OUT_DIR/$1-cache.log ; } &> $TIME_DIR/$1-cache.time
 
   run_driver $1 $2
 
@@ -31,6 +34,7 @@ function run_exp {
 # $1: exp name
 # $2: driver name
 function run_driver {
+  echo "Running driver"
   rm -rf *.class
   javac -cp .:* $2.java $2Main.java
 
