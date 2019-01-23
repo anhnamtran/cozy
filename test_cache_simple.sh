@@ -41,3 +41,4 @@ mkdir -p $OUT_DIR
 mkdir -p $TIME_DIR
 
 run_exp maxbag MaxBag
+run_exp agg Agg
