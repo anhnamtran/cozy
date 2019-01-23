@@ -64,7 +64,7 @@ class AggMain {
   }
   
   public static Integer sum(ArrayList<Integer> ls) {
-    Integer sum = new Integer();
+    Integer sum = new Integer(0);
     for (int i = 0; i < ls.size(); i++) {
       sum.add(ls.get(i));
     }
@@ -72,9 +72,9 @@ class AggMain {
   }
 
   public static Integer countGt10(ArrayList<Integer> ls) {
-    Integer count = new Integer();
+    Integer count = 0;
     for (int i = 0; i < ls.size(); i++) {
-      if (ls.get(i).compareTo(new Integer(10) > 0))
+      if (ls.get(i).compareTo(new Integer(10)) > 0)
         count.add(1);
     }
     return count;
