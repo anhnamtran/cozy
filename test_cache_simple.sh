@@ -1,5 +1,7 @@
 export PYTHONUNBUFFERED=1
 
+set -x
+
 OUT_DIR="/tmp/cozy-logs"
 
 # $1: exp name
@@ -11,7 +13,7 @@ function run_exp {
 
   run_driver $1 $2
 
-  { time cozy $1 --java $1.java &> $OUT_DIR/$1.log ; } &> $1-cache.time
+  { time cozy $1.ds --java $1.java &> $OUT_DIR/$1.log ; } &> $1-cache.time
 
   run_driver $1 $2
 
