@@ -2,25 +2,30 @@ export PYTHONUNBUFFERED=1
 
 set -e
 
-OUT_DIR="/tmp/cozy-logs"
+LOG_DIR="/tmp/cozy-logs"
+
+OUT_DIR="$LOG_DIR/cozy"
+TIME_DIR="$LOG_DIR/times"
 
 # $1: exp name
 # $2: out name
 function run_exp {
   redis-cli FLUSHALL
-  pushd cache_examples
+  pushd cache_examples > /dev/null
 
   echo "Running Cozy with no cache"
-  { time cozy --no-cost-model-cache $1.ds --java $2.java &> $OUT_DIR/$1-no-cache.log ; } &> $1-no-cache.time
+  { time cozy --no-cost-model-cache $1.ds --java $2.java &> $OUT_DIR/$1-no-cache.log ; } &> $TIME_DIR/$1-no-cache.time
 
   run_driver $1 $2
 
   echo "Running Cozy with cache"
-  { time cozy $1.ds --java $2.java &> $OUT_DIR/$1-cache.log ; } &> $1-cache.time
+  { time cozy $1.ds --java $2.java &> $OUT_DIR/$1-cache.log ; } &> $TIME_DIR/$1-cache.time
 
   run_driver $1 $2
 
-  popd
+  popd > /dev/null
+
+  echo "----------------------------------------------------------------------"
 }
 
 # $1: exp name
@@ -33,5 +38,6 @@ function run_driver {
 }
 
 mkdir -p $OUT_DIR
+mkdir -p $TIME_DIR
 
 run_exp maxbag MaxBag
