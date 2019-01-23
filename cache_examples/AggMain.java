@@ -74,7 +74,7 @@ class AggMain {
   public static Integer countGt10(ArrayList<Integer> ls) {
     Integer count = 0;
     for (int i = 0; i < ls.size(); i++) {
-      if (ls.get(i).compareTo(new Integer(10)) > 0)
+      if (ls.get(i).compareTo(10) > 0)
         count++;
     }
     return count;
